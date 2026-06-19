@@ -9,4 +9,4 @@
 3. **在 Settings 中把 Compiler 设为 `XeLaTeX`**(中文必须选这个,否则报错)
 4. 点 Recompile 即可生成 PDF
 
-> 本地编译同理,用 `xelatex main.tex`。把模板里"张三"的示例内容换成你自己的即可;不想放照片可将 `\phototrue` 改为 `\photofalse`。
+> 本地编译同理,用 `xelatex main.tex`。把模板里"张三"的示例内容换成你自己的即可。
