@@ -1,0 +1,199 @@
+%==============================================================%
+%   保研 / 考研 中文简历模板 (LaTeX) —— 排版优化版
+%   —— 在 Overleaf 中使用方法 ——
+%   1. 打开 overleaf.com，新建 Blank Project，把本文件全部内容粘进去
+%   2. 左上角 Menu -> Compiler 选择 "XeLaTeX"（一定要选这个，否则中文报错）
+%   3. 点 Recompile 即可看到 PDF
+%   4. 把示例内容（张三那一套）换成你自己的即可
+%
+%   —— 本版相对原版的排版改动（详见每处注释 [改]）——
+%   1. 模块顺序：教育 -> 科研 -> 实习 -> 竞赛 -> 技能（把含金量高的实习提前）
+%   2. 照片与姓名顶端对齐（原来略微偏下）
+%   3. 链接颜色与标题蓝区分开，视觉更克制
+%   4. 只加粗最关键的成果数字，避免"满屏重点"
+%   5. 段间距整体微调，版面呼吸感更均匀
+%==============================================================%
+
+\documentclass[a4paper,11pt]{article}
+
+% ---------- 中文支持（Overleaf 自带，无需安装）----------
+\usepackage[UTF8]{ctex}
+
+% ---------- 页面边距 ----------
+\usepackage[top=1.2cm, bottom=1.2cm, left=1.4cm, right=1.4cm]{geometry}
+
+% ---------- 常用宏包 ----------
+\usepackage{titlesec}      % 自定义标题样式
+\usepackage{enumitem}      % 自定义列表
+\usepackage{xcolor}        % 颜色
+\usepackage{hyperref}      % 超链接（邮箱、GitHub 等）
+\usepackage{tabularx}      % 表格
+\usepackage{fontawesome5}  % 小图标（如不需要可删掉相关命令）
+\usepackage{graphicx}      % 插入照片用
+\DeclareGraphicsExtensions{.jpg,.jpeg,.png,.pdf}  % 不写后缀时，按此顺序自动匹配
+\usepackage{tikz}          % 用于把照片裁成圆角（可选）
+
+% ---------- 主题色（想换颜色改这一行即可）----------
+\definecolor{themecolor}{HTML}{2C5F8A}   % 沉稳的学术蓝（标题 / 分隔线用）
+\definecolor{textgray}{HTML}{333333}
+% [改] 链接单独用一个更深、更低调的颜色，避免和标题蓝撞色、抢视线
+\definecolor{linkcolor}{HTML}{1F4567}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=linkcolor,
+    linkcolor=linkcolor
+}
+
+% ---------- 取消页码 ----------
+\pagestyle{empty}
+
+% ---------- 是否放照片的开关 ----------
+% 想放照片：保持下面这行不变（已设为 \phototrue）
+% 不想放照片：把 \phototrue 改成 \photofalse 即可，其它都不用动
+%   （保研/考研简历照片并非必须；若证件照不够清晰正式，建议直接 \photofalse）
+\newif\ifphoto
+\phototrue   % <== 放照片用这个；不放就把它改成 \photofalse
+\newcommand{\photofile}{photo}  % <== 改成你照片的文件名（不用写后缀！jpg 或 png 都会自动识别）
+
+% ---------- 段落间距 ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+
+% ---------- 自定义章节标题样式 ----------
+\titleformat{\section}
+  {\color{themecolor}\large\bfseries}   % 字体样式
+  {}{0em}                               % 不要编号
+  {}                                    % 标题前内容
+  [\vspace{1pt}\color{themecolor}\titlerule] % 标题下加一条横线
+% [改] 标题上方留白略增（5->6），各模块之间分隔更均匀（同时保证单页）
+\titlespacing{\section}{0pt}{6pt}{3pt}
+
+% ---------- 自定义列表样式 ----------
+\setlist[itemize]{leftmargin=1.2em, itemsep=0pt, topsep=1pt, parsep=0pt}
+
+% ---------- 一个方便写"经历条目"的命令 ----------
+% 用法：\entry{左上：标题}{右上：时间}{左下：副标题}{右下：地点}
+\newcommand{\entry}[4]{%
+  \noindent\begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+  \end{tabularx}%
+}
+
+% [改] 单行条目命令：只有"标题 + 时间"，用于不需要副标题（角色/单位）的经历
+\newcommand{\entryone}[2]{%
+  \noindent\begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#1} & #2 \\
+  \end{tabularx}%
+}
+
+% [改] 同一模块内两条经历之间的统一间距，避免手动 \vspace 不一致
+\newcommand{\entrygap}{\vspace{2pt}}
+
+%==============================================================%
+\begin{document}
+
+%==================== 顶部：姓名 + 联系方式（右侧可放照片）====================%
+\ifphoto
+% ----- 放照片：左边姓名信息，右边照片；[改] 两侧改为顶端对齐 [t] -----
+\noindent\begin{tabularx}{\textwidth}{@{}X c@{}}
+\begin{minipage}[t]{\linewidth}
+    \vspace{0pt} % 配合 [t] 对齐，使文字真正贴顶
+    {\Huge\bfseries\color{textgray} 张三}\\[6pt]
+    \small
+    \faPhone* \, 138-1234-5678\\[3pt]
+    \faEnvelope \, \href{mailto:zhangsan2026@163.com}{zhangsan2026@163.com}\\[3pt]
+    % 有 GitHub / 个人主页再填，没有就删掉这一行
+    \faGithub \, \href{https://github.com/zhangsan}{github.com/zhangsan}
+\end{minipage}
+&
+% 照片：宽 2.4cm、高 3.0cm（略缩小，使其高度更贴近左侧文字，减少下方空白）
+\begin{minipage}[t]{2.6cm}
+    \vspace{0pt}
+    \begin{tikzpicture}
+        \clip (0,0) rectangle (2.4,3.0); % 长宽比约 1:1.25，接近证件照
+        \node[anchor=south west, inner sep=0] at (0,0)
+            {\includegraphics[width=2.4cm,height=3.0cm]{\photofile}};
+    \end{tikzpicture}
+\end{minipage}
+\end{tabularx}
+\else
+% ----- 不放照片：姓名信息居中 -----
+\begin{center}
+    {\Huge\bfseries\color{textgray} 张三}\\[4pt]
+    \small
+    \faPhone* \, 138-1234-5678 \quad
+    \faEnvelope \, \href{mailto:zhangsan2026@163.com}{zhangsan2026@163.com} \quad
+    \faMapMarker* \, 北京\\[2pt]
+    \faGithub \, \href{https://github.com/zhangsan}{github.com/zhangsan} \quad
+    \faGraduationCap \, 中共党员 / 应届毕业生
+\end{center}
+\fi
+
+% [改] 头部与第一个模块之间收紧（原 +2pt 改为 -6pt），减少照片下方空白
+\vspace{-6pt}
+
+%==================== 教育背景 ====================%
+\section{教育背景}
+% [改] 教育只有一条、无"角色"副标题，合并为单行：学校 + 专业（学位）左对齐，时间右对齐
+\noindent\begin{tabularx}{\textwidth}{@{}X r@{}}
+  \textbf{云麓大学}\quad 计算机科学与技术（本科） & 2021.09 -- 2025.06 \\
+\end{tabularx}
+\begin{itemize}
+    \item \textbf{GPA：} 3.8/4.0\quad \textbf{专业排名：} 3/120（前 2.5\%）
+    \item \textbf{英语水平：} CET-4 632 / CET-6 580
+    \item \textbf{主修课程：} 数据结构、算法设计与分析、机器学习、概率论与数理统计、线性代数、操作系统、计算机网络
+\end{itemize}
+
+%==================== 科研经历 ====================%
+\section{科研经历}
+\entryone{基于注意力机制的医学图像分割研究\,{\normalfont· 核心成员}}{2023.09 -- 2024.06}
+\begin{itemize}
+    \item \textbf{项目背景：}针对医学影像中器官边界模糊、标注数据稀缺导致分割精度不足的问题，探索更鲁棒的分割方法。
+    \item \textbf{我的工作：}设计并实现了融合注意力机制的 U-Net 改进网络，构建了数据增强与半监督训练流程，独立完成模型训练与消融实验。
+    % [改] 只加粗最关键的成果数字
+    \item \textbf{成果产出：}在公开数据集上分割准确率（Dice）提升 \textbf{12\%}，相关工作整理为论文 1 篇（已投 MICCAI Workshop，在审）。
+\end{itemize}
+
+\entrygap
+\entryone{面向边缘设备的轻量化目标检测（毕业设计）}{2024.10 -- 2025.05}
+\begin{itemize}
+    \item \textbf{项目背景：}解决目标检测模型在算力受限的嵌入式设备上推理速度慢、功耗高的问题。
+    \item \textbf{我的工作：}基于知识蒸馏与模型剪枝对检测网络进行压缩，并完成在 Jetson Nano 上的部署与测试。
+    % [改] 只加粗最关键的成果数字
+    \item \textbf{成果产出：}模型体积压缩约 \textbf{60\%}，推理速度提升 \textbf{2.3 倍}，精度损失控制在 1.5\% 以内。
+\end{itemize}
+
+%==================== 实习 / 项目经历 ====================%
+% [改] 实习（商汤）含金量高，整体提到竞赛之前，让硬内容集中在上半页
+\section{实习 / 项目经历}
+\entryone{商汤科技（SenseTime）\,{\normalfont· 算法实习生}}{2024.07 -- 2024.09}
+\begin{itemize}
+    \item 参与图像分类模型的数据清洗与标注质量优化，将训练集噪声样本占比从 8\% 降至 \textbf{2\% 以下}。
+    \item 复现并对比了 3 种主流骨干网络，输出实验报告，相关结论被团队采纳用于模型选型。
+    \item 技术栈：Python、PyTorch、Git、内部分布式训练平台。
+\end{itemize}
+
+%==================== 竞赛获奖 ====================%
+\section{竞赛获奖}
+\begin{itemize}
+    \item \textbf{2024} 全国大学生数学建模竞赛 —— \textbf{国家级二等奖}（队长，3 人队）
+    \item \textbf{2023} 蓝桥杯程序设计大赛 —— 省级一等奖
+    \item \textbf{2022 -- 2024} 国家奖学金、校一等奖学金（连续 3 次）、校级三好学生
+\end{itemize}
+
+%==================== 技能 & 其他 ====================%
+\section{专业技能}
+\begin{itemize}
+    \item \textbf{编程语言：} Python（熟练）、C++、MATLAB、SQL
+    \item \textbf{工具框架：} PyTorch、Git、LaTeX、Linux、Docker
+    \item \textbf{其他技能：} 熟悉常见深度学习模型与训练调优流程，具备一定的论文阅读与复现能力
+\end{itemize}
+
+%==================== 自我评价（可选）====================%
+% 自我评价不是必须，写的话务必简短、具体、不空话
+% \section{自我评价}
+% 对计算机视觉方向有持续兴趣，具备扎实的科研基础与较强的自学能力。
+
+\end{document}
