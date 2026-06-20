@@ -5,7 +5,7 @@
 ## 使用方法(Overleaf,无需安装)
 
 1. 打开 [Overleaf](https://www.overleaf.com),新建 Blank Project
-2. 把 `main.tex` 的内容粘贴进去,并上传你的照片 `photo.png`
+2. 把 `resume.tex` 的内容粘贴进去,并上传你的照片 `photo.png`
 3. **在 Settings 中把 Compiler 设为 `XeLaTeX`**(中文必须选这个,否则报错)
 4. 点 Recompile 即可生成 PDF
 
